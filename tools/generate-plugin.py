@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # generate-plugin.py - pluma plugin skeletton generator
@@ -81,14 +81,14 @@ try:
                                 'with-bottom-pane'  , 'without-bottom-pane',
                                 'with-config-dlg'   , 'without-config-dlg',
                                 'help'])
-except getopt.error, exc:
+except getopt.error as exc:
     print >>sys.stderr, '%s: %s' % (sys.argv[0], str(exc))
     print >>sys.stderr, USAGE
     sys.exit(1)
 
 for opt, arg in opts:
     if opt in ('-h', '--help'):
-        print >>sys.stderr, HELP
+        print(HELP, file=sys.stderr)
         sys.exit(0)
 
     elif opt in ('--description', '--author', '--email'):
@@ -108,7 +108,7 @@ for opt, arg in opts:
 
 # What's the new plugin name ?
 if len(args) < 1:
-    print >>sys.stderr, USAGE
+    print(USAGE, file=sys.stderr)
     sys.exit(1)
 
 plugin_name = args[0]
@@ -156,9 +156,10 @@ if options['with-config-dlg']:
 
 
 # Generate the plugin base
-for infile, outfile in output_files.iteritems():
-    print 'Processing %s\n' \
-          '      into %s...' % (infile, outfile)
+print(output_files)
+for infile, outfile in output_files.items():
+    print('Processing %s\n' \
+          '      into %s...' % (infile, outfile))
 
     infile = os.path.join(TEMPLATE_DIR, infile)
     outfile = os.path.join(os.getcwd(), outfile)
@@ -177,6 +178,6 @@ for infile, outfile in output_files.iteritems():
     # Generate the file
     preprocessor.process(infile, outfile, directives.copy())
 
-print 'Done.'
+print('Done.')
 
 # ex:ts=4:et:
